@@ -21,14 +21,31 @@ const main = async () => {
   console.log('Pending balance: ', accountBalances.pending.toString(10));
 
   // 2. Query node info
+  const nodeInfo = await web3.eth.getNodeInfo()
+    .catch((err) => { throw new Error(`Could not fetch node info: ${err}`); });
+  console.log('Node Info: ', nodeInfo);
 
   // 3.1 Query latest block
+  const blocksLatest = await web3.eth.getBlock("latest")
+    .catch((err) => { throw new Error(`Could not fetch latest block: ${err}`); });
+  console.log('Latest block: ', blocksLatest);
 
-  // 3.2 Block by number, defaults to latest, lets get block 3263105
+  // 3.2 Block by number, defaults to latest, lets get block 100
+  const blocks = await web3.eth.getBlock(100)
+    .catch((err) => { throw new Error(`Could not fetch block: ${err}`); });
+  console.log('Blocks: ', blocks);
 
-  // 4. eth_getTransactionCount
+  // 4. Get transactions count
+  const transactionCount = await web3.eth.getTransactionCount(account.address)
+    .catch((err) => { throw new Error(`Could not fetch transaction count: ${err}`); });
+  console.log('Transaction Count: ', transactionCount);
 
-  // 5.eth_estimateGas
+  // 5.Estimate gas cost
+  const gasEstimate = await web3.eth.estimateGas({
+      to: account.address,
+      data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+}).catch((err) => { throw new Error(`Could not estimate gas: ${err}`) });
+  console.log('Gas estimate: ', gasEstimate);
 };
 
 main().catch((err) => {
