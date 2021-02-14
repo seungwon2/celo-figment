@@ -12,6 +12,7 @@
   "dependencies": {
     "@celo/contractkit": "^1.0.1",
     "dotenv": "^8.2.0",
+    "truffle": "^5.1.66",
     "web3": "^1.3.0"
   }
 }
